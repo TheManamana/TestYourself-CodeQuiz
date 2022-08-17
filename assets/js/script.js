@@ -1,7 +1,8 @@
 var questionIndex = 0;
 var currentQuestion;
+var time;
 
-
+var timeLeftEl = document.getElementById("time");
 var startBtn = document.getElementById('start');
 var beforeGame = document.getElementById('before-game');
 var quiz = document.getElementById('quiz');
@@ -14,33 +15,58 @@ option3El = document.getElementById('option-three');
 option4El = document.getElementById('option-four');
 
 
+// Pressing button starts game 
+startBtn.onclick = beginQuiz;
+
+// Initializes the quiz and Timer 
 function beginQuiz() {
 
+    //Hides initial text
     beforeGame.setAttribute('class', 'hide');
 
+    //Causes quiz questions to show up
     quiz.removeAttribute('class');
 
+    //Sets and displays first timer value
+    time = 60;
+    timeLeftEl.textContent = time;
+    
+    //Calls function to display first question
     getQuestion();
 
-    
+    //Changes and updates the timer every second
+    setInterval( function() {
+
+        if (time>0){
+          time --;
+        timeLeftEl.textContent = time;  
+        }else{
+            // ADD GAME OVER 
+
+        }
+          
+    }, 1000)
 
 
 
 }
-startBtn.onclick = beginQuiz;
+
 
 
 
 
 function getQuestion(){
 
+    //Gets current question object based upon current index
     currentQuestion = questions[questionIndex];
+    //increases question index
     questionIndex ++;
 
+    //Updates question element
     var askQuestion = document.getElementById('question');
   askQuestion.textContent = currentQuestion.sentence;
 
-  
+  // Updates answer button elements
   option1El.textContent = '1. ' + currentQuestion.choices[0];
   option2El.textContent = '2. ' + currentQuestion.choices[1];
   option3El.textContent = '3. ' + currentQuestion.choices[2];
