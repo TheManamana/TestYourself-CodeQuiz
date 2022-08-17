@@ -7,6 +7,8 @@ var startBtn = document.getElementById('start');
 var beforeGame = document.getElementById('before-game');
 var quiz = document.getElementById('quiz');
 
+var answersEl = document.getElementById('answers');
+
 
 // Option button Elements 
 option1El = document.getElementById('option-one');
@@ -17,6 +19,8 @@ option4El = document.getElementById('option-four');
 
 // Pressing button starts game 
 startBtn.onclick = beginQuiz;
+
+answersEl.onclick = questionAnswer;
 
 // Initializes the quiz and Timer 
 function beginQuiz() {
@@ -76,7 +80,24 @@ function getQuestion(){
   
 }
 
+function questionAnswer(event) {
+    var buttonEl = event.target;
+  
+    // if the clicked element is not a choice button, do nothing.
+    if (!buttonEl.matches('.answer')) {
+        
+      return;
+    }
+  
+    
 
+    if(buttonEl.textContent.substr(3)!==currentQuestion.answer){
+        console.log("Wrong");
+    }else{
+        console.log("Correct");
+    }
+    
+  }
 
 
 
