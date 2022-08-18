@@ -1,11 +1,12 @@
 var questionIndex = 0;
 var currentQuestion;
 var time;
+var timer;
 
 var timeLeftEl = document.getElementById("time");
-var startBtn = document.getElementById('start');
-var beforeGame = document.getElementById('before-game');
-var quiz = document.getElementById('quiz');
+var startBtnEl = document.getElementById('start');
+var beforeGameEl = document.getElementById('before-game');
+var quizEl = document.getElementById('quiz');
 
 var answersEl = document.getElementById('answers');
 
@@ -18,7 +19,7 @@ option4El = document.getElementById('option-four');
 
 
 // Pressing button starts game 
-startBtn.onclick = beginQuiz;
+startBtnEl.onclick = beginQuiz;
 
 answersEl.onclick = questionAnswer;
 
@@ -26,10 +27,10 @@ answersEl.onclick = questionAnswer;
 function beginQuiz() {
 
     //Hides initial text
-    beforeGame.setAttribute('class', 'hide');
+    beforeGameEl.setAttribute('class', 'hide');
 
     //Causes quiz questions to show up
-    quiz.removeAttribute('class');
+    quizEl.removeAttribute('class');
 
     //Sets and displays first timer value
     time = 60;
@@ -39,13 +40,13 @@ function beginQuiz() {
     getQuestion();
 
     //Changes and updates the timer every second
-    setInterval( function() {
+    timer = setInterval( function() {
 
         if (time>0){
           time --;
         timeLeftEl.textContent = time;  
         }else{
-            // ADD GAME OVER 
+            gameOver(); 
 
         }
           
@@ -63,8 +64,8 @@ function getQuestion(){
 
     //Gets current question object based upon current index
     currentQuestion = questions[questionIndex];
-    //increases question index
-    questionIndex ++;
+    
+    
 
     //Updates question element
     var askQuestion = document.getElementById('question');
@@ -83,7 +84,7 @@ function getQuestion(){
 function questionAnswer(event) {
     var buttonEl = event.target;
   
-    // if the clicked element is not a choice button, do nothing.
+    // Does nothing if it wasn't an answer button that was clicked
     if (!buttonEl.matches('.answer')) {
         
       return;
@@ -93,9 +94,36 @@ function questionAnswer(event) {
 
     if(buttonEl.textContent.substr(3)!==currentQuestion.answer){
         console.log("Wrong");
+        time -= 15;
+
+        if(time<0){
+            time = 0;
+        }
+        
+
     }else{
+        time += 5;
+        
         console.log("Correct");
     }
+    timeLeftEl.textContent = time;
+
+    questionIndex ++;
+
+    console.log(questionIndex);
+
+    if(questionIndex > questions.length - 1){
+        console.log('Game Over');
+        gameOver();
+    }else{
+        getQuestion();
+    }
+  }
+
+  function gameOver(){
+
+    clearInterval(timer);
+
     
   }
 
