@@ -1,3 +1,57 @@
 .hide {
     display: none;
 }
+
+.scores {
+    position:absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.timer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+
+.opening {
+    text-align: center;
+    margin-top: 100px;
+}
+
+h1 {
+    font-size: 200%;
+}
+
+.game{
+    display: inline-block;
+    text-align: left;
+    margin-top: 50px;
+    
+    
+}
+
+
+
+.wrapper {
+  margin: 100px auto 0 auto;
+  max-width: 600px;
+}
+
+button {
+  background-color: #3f7497;
+  cursor: pointer;
+  color: white;
+  margin: 5px;
+  font-size: 125%;
+  border-radius: 10px;
+  
+    
+  
+  
+}
+
+button:hover {
+    background-color: #337752;
+  }

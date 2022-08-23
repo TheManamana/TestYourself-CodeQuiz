@@ -30,7 +30,7 @@ function beginQuiz() {
     beforeGameEl.setAttribute('class', 'hide');
 
     //Causes quiz questions to show up
-    quizEl.removeAttribute('class');
+    quizEl.setAttribute('class', 'game');
 
     //Sets and displays first timer value
     time = 60;
@@ -72,10 +72,10 @@ function getQuestion(){
   askQuestion.textContent = currentQuestion.sentence;
 
   // Updates answer button elements
-  option1El.textContent = '1. ' + currentQuestion.choices[0];
-  option2El.textContent = '2. ' + currentQuestion.choices[1];
-  option3El.textContent = '3. ' + currentQuestion.choices[2];
-  option4El.textContent = '4. ' + currentQuestion.choices[3];
+  option1El.textContent = currentQuestion.choices[0];
+  option2El.textContent = currentQuestion.choices[1];
+  option3El.textContent = currentQuestion.choices[2];
+  option4El.textContent = currentQuestion.choices[3];
 
 
   
@@ -92,7 +92,7 @@ function questionAnswer(event) {
   
     
 
-    if(buttonEl.textContent.substr(3)!==currentQuestion.answer){
+    if(buttonEl.textContent!==currentQuestion.answer){
         console.log("Wrong");
         time -= 15;
 

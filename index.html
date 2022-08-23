@@ -14,8 +14,8 @@
     <div class="timer">Time: <span id="time">0</span></div>
 
 
-    <article>
-      <section id="before-game">
+    <article class="wrapper">
+      <section id="before-game" class="opening">
         <h1>Coding Quiz</h1>
         <p>
           Press the button to begin the quiz. You will have 60 seconds to answer the questions.
@@ -24,17 +24,21 @@
         </p>
         <button id="start">Start Quiz</button>
       </section>
-
-      <div id="quiz" class = "hide"> 
+      
+      <section class="middle"> 
+      <div id="quiz"  class = "hide" class= "game"> 
         <h2 id="question">Test</h2>
-        <div id="answers">
-          <button id="option-one" class="answer">Start Quiz</button>
-          <button id="option-two" class="answer">Start Quiz</button>
-          <button id="option-three" class="answer">Start Quiz</button>
-          <button id="option-four" class="answer">Start Quiz</button> 
-        </div>
+        <ol id="answers" class= "answersClass">
+          <li><button id="option-one" class="answer">Start Quiz</button></li>
+          <li><button id="option-two" class="answer">Start Quiz</button></li>
+          <li><button id="option-three" class="answer">Start Quiz</button></li>
+          <li><button id="option-four" class="answer">Start Quiz</button></li> 
+        </ol>
+        
 
       </div>
+      </section>
+
 
       <div id = game-over></div>
 
