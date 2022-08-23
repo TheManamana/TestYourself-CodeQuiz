@@ -1,13 +1,16 @@
+
+// Variables needed
 var questionIndex = 0;
 var currentQuestion;
 var time;
 var timer;
 var responseText;
 
+//Button Elements
 var startBtnEl = document.getElementById('start');
-var submitBtnEl= document.getElementById('submit');
+var submitBtnEl = document.getElementById('submit');
 
-
+//Html Elements
 var timeLeftEl = document.getElementById("time");
 var nameEl = document.getElementById('name');
 var beforeGameEl = document.getElementById('before-game');
@@ -15,7 +18,8 @@ var quizEl = document.getElementById('quiz');
 var responseEl = document.getElementById('response');
 var gameOverEl = document.getElementById('game-over');
 var answersEl = document.getElementById('answers');
-var finalScoreEl =document.getElementById('finalScore');
+var finalScoreEl = document.getElementById('finalScore');
+var emptyNameEl = document.getElementById('emptyName');
 
 
 // Option button Elements 
@@ -46,22 +50,24 @@ function beginQuiz() {
     //Sets and displays first timer value
     time = 60;
     timeLeftEl.textContent = time;
-    
+
     //Calls function to display first question
     getQuestion();
 
     //Changes and updates the timer every second
-    timer = setInterval( function() {
+    timer = setInterval(function () {
 
-        if (time>0){
-          time --;
-        timeLeftEl.textContent = time; 
-            if (time===0){
+        if (time > 0) {
+            time--;
+            timeLeftEl.textContent = time;
+            if (time === 0) {
+
+                // If time is 0, ends game
                 gameOver();
             }
-        
+
         }
-          
+
     }, 1000)
 
 
@@ -72,56 +78,57 @@ function beginQuiz() {
 
 
 
-function getQuestion(){
+function getQuestion() {
 
     //Gets current question object based upon current index
     currentQuestion = questions[questionIndex];
-    
-    
+
+
 
     //Updates question element
     var askQuestion = document.getElementById('question');
-  askQuestion.textContent = currentQuestion.sentence;
+    askQuestion.textContent = currentQuestion.sentence;
 
-  // Updates answer button elements
-  option1El.textContent = currentQuestion.choices[0];
-  option2El.textContent = currentQuestion.choices[1];
-  option3El.textContent = currentQuestion.choices[2];
-  option4El.textContent = currentQuestion.choices[3];
+    // Updates answer button elements
+    option1El.textContent = currentQuestion.choices[0];
+    option2El.textContent = currentQuestion.choices[1];
+    option3El.textContent = currentQuestion.choices[2];
+    option4El.textContent = currentQuestion.choices[3];
 
 
-  
+
 }
 
 function questionAnswer(event) {
     var buttonEl = event.target;
-  
+
     // Does nothing if it wasn't an answer button that was clicked
     if (!buttonEl.matches('.answer')) {
-        
-      return;
-    }
-  
-    
 
-    if(buttonEl.textContent!==currentQuestion.answer){
+        return;
+    }
+
+
+    // Checks if answer is wrong, subtracts 15 sec if it is. If time is 0 ends game.
+    // If answer is correct, adds 5 seconds to time.
+    if (buttonEl.textContent !== currentQuestion.answer) {
         console.log("Wrong");
         time -= 15;
 
         responseText = "Wrong!!!";
         responseEl.style.color = "red";
 
-        if(time<0){
+        if (time < 0) {
             time = 0;
         }
-        if(time===0){
+        if (time === 0) {
             gameOver();
         }
-        
 
-    }else{
+
+    } else {
         time += 5;
-        
+
         console.log("Correct");
         responseText = "Correct!!!";
         responseEl.style.color = "#337752";
@@ -130,67 +137,81 @@ function questionAnswer(event) {
 
     showResponse();
 
-
+    // Updates Timer Element
     timeLeftEl.textContent = time;
 
-    questionIndex ++;
+    //Increases question Index
+    questionIndex++;
 
     console.log(questionIndex);
 
-    if(questionIndex > questions.length - 1){
+    //If there are no other questions ends game. Otherwise pulls next question
+    if (questionIndex > questions.length - 1) {
         console.log('Game Over');
         gameOver();
-    }else{
+    } else {
         getQuestion();
     }
-  }
+}
 
-
-  function showResponse(){
-    responseEl.textContent=responseText;
+//Shows response of whether last question was correct
+function showResponse() {
+    responseEl.textContent = responseText;
 
     responseEl.setAttribute("class", "response");
     setTimeout(function () {
         responseEl.setAttribute('class', 'hide');
-      }, 1000);
+    }, 1000);
 
-  }
+}
 
-  function gameOver(){
+// Stops timer and asks for name
+function gameOver() {
 
     clearInterval(timer);
-    quizEl.setAttribute("class","hide");
+    quizEl.setAttribute("class", "hide");
     finalScoreEl.textContent = "Your score was " + time;
-    gameOverEl.setAttribute("class","game");
+    gameOverEl.setAttribute("class", "game");
 
-    
-  }
 
-  function saveScore(){
+}
 
-    // get value of input box
-  var name = nameEl.value.trim();
+function saveScore() {
 
-  // make sure value wasn't empty
-  if (name !== '') {
-    // get saved scores from localstorage, or if not any, set to empty array
-    var highscores =
-      JSON.parse(window.localStorage.getItem('highscores')) || [];
+    // Gets text from input and trims whitespace
+    var name = nameEl.value.trim();
 
-    // format new score object for current user
-    var newScore = {
-      score: time,
-      name: name,
-    };
+    // If the value is empty returns a response 
+    if (name === '') {
+        emptyNameEl.textContent = "You can't submit an empty name";
+        emptyNameEl.setAttribute("class", "response");
+        setTimeout(function () {
+            emptyNameEl.setAttribute('class', 'hide');
+        }, 1000);
 
-    // save to localstorage
-    highscores.push(newScore);
-    window.localStorage.setItem('highscores', JSON.stringify(highscores));
+    }
+    else {
 
-    // redirect to next page
-    window.location.href = 'highscores.html';
-  }
-  }
+
+        // Gets highscores strings and parses it into an object otherwise creates an empty array
+        var highscores = JSON.parse(window.localStorage.getItem('scores')) || [];
+
+        // Creates newScore object
+        var newScore = {
+            score: time,
+            name: name,
+        };
+
+        // Adds new score and saves it as a string in local storage
+        highscores.push(newScore);
+        window.localStorage.setItem('scores', JSON.stringify(highscores));
+
+        // Opens the highscores page
+        window.location.href = 'highscores.html';
+
+
+    }
+}
 
 
 
