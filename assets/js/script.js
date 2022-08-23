@@ -112,7 +112,7 @@ function questionAnswer(event) {
     // Checks if answer is wrong, subtracts 15 sec if it is. If time is 0 ends game.
     // If answer is correct, adds 5 seconds to time.
     if (buttonEl.textContent !== currentQuestion.answer) {
-        console.log("Wrong");
+        
         time -= 15;
 
         responseText = "Wrong!!!";
@@ -129,7 +129,7 @@ function questionAnswer(event) {
     } else {
         time += 5;
 
-        console.log("Correct");
+        
         responseText = "Correct!!!";
         responseEl.style.color = "#337752";
 
@@ -143,11 +143,11 @@ function questionAnswer(event) {
     //Increases question Index
     questionIndex++;
 
-    console.log(questionIndex);
+    
 
     //If there are no other questions ends game. Otherwise pulls next question
     if (questionIndex > questions.length - 1) {
-        console.log('Game Over');
+        
         gameOver();
     } else {
         getQuestion();
@@ -221,11 +221,7 @@ function saveScore() {
 
 
 
-
-
-
-
-
+// Available questions
 
 var questions = [
     {

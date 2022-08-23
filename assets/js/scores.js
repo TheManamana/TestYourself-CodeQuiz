@@ -1,6 +1,5 @@
 
 
-
 var highscoresEl = document.getElementById('highscores');
 var clearBtnEl = document.getElementById('clearScores');
 

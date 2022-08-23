@@ -7,6 +7,21 @@ User can take a multiple choice quiz that has a timer for 60 seconds. Correct an
 At the end of the quiz the user's score can be saved in a highscores list.
 
 
+Url Link:
+[Coding Quiz](https://themanamana.github.io/TestYourself-CodeQuiz/)
+
+## Concepts Used
+-Objects
+
+-Local Storage
+
+-JSON
+
+-AJAX
+
+-Time Intervals
+
+
 ## Main Page
 ![Main Page](./assets/images/CodeQuizMain.png)
 
