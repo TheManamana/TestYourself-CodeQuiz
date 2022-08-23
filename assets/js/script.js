@@ -4,15 +4,18 @@ var time;
 var timer;
 var responseText;
 
+var startBtnEl = document.getElementById('start');
+var submitBtnEl= document.getElementById('submit');
+
 
 var timeLeftEl = document.getElementById("time");
-var startBtnEl = document.getElementById('start');
+var nameEl = document.getElementById('name');
 var beforeGameEl = document.getElementById('before-game');
 var quizEl = document.getElementById('quiz');
 var responseEl = document.getElementById('response');
-
+var gameOverEl = document.getElementById('game-over');
 var answersEl = document.getElementById('answers');
-
+var finalScoreEl =document.getElementById('finalScore');
 
 
 // Option button Elements 
@@ -25,6 +28,10 @@ option4El = document.getElementById('option-four');
 // Pressing button starts game 
 startBtnEl.onclick = beginQuiz;
 
+// Pressing Submit button saves info
+submitBtnEl.onclick = saveScore;
+
+// Pressing an answer button
 answersEl.onclick = questionAnswer;
 
 // Initializes the quiz and Timer 
@@ -48,10 +55,11 @@ function beginQuiz() {
 
         if (time>0){
           time --;
-        timeLeftEl.textContent = time;  
-        }else{
-            gameOver(); 
-
+        timeLeftEl.textContent = time; 
+            if (time===0){
+                gameOver();
+            }
+        
         }
           
     }, 1000)
@@ -106,6 +114,9 @@ function questionAnswer(event) {
         if(time<0){
             time = 0;
         }
+        if(time===0){
+            gameOver();
+        }
         
 
     }else{
@@ -148,8 +159,37 @@ function questionAnswer(event) {
   function gameOver(){
 
     clearInterval(timer);
+    quizEl.setAttribute("class","hide");
+    finalScoreEl.textContent = "Your score was " + time;
+    gameOverEl.setAttribute("class","game");
 
     
+  }
+
+  function saveScore(){
+
+    // get value of input box
+  var name = nameEl.value.trim();
+
+  // make sure value wasn't empty
+  if (name !== '') {
+    // get saved scores from localstorage, or if not any, set to empty array
+    var highscores =
+      JSON.parse(window.localStorage.getItem('highscores')) || [];
+
+    // format new score object for current user
+    var newScore = {
+      score: time,
+      name: name,
+    };
+
+    // save to localstorage
+    highscores.push(newScore);
+    window.localStorage.setItem('highscores', JSON.stringify(highscores));
+
+    // redirect to next page
+    window.location.href = 'highscores.html';
+  }
   }
 
 
