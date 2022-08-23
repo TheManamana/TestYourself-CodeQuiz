@@ -55,3 +55,9 @@ button {
 button:hover {
     background-color: #337752;
   }
+
+  .response{    
+    border-top: 2px dotted #ccc;
+    font-size: 150%;
+    
+  }

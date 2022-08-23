@@ -2,13 +2,17 @@ var questionIndex = 0;
 var currentQuestion;
 var time;
 var timer;
+var responseText;
+
 
 var timeLeftEl = document.getElementById("time");
 var startBtnEl = document.getElementById('start');
 var beforeGameEl = document.getElementById('before-game');
 var quizEl = document.getElementById('quiz');
+var responseEl = document.getElementById('response');
 
 var answersEl = document.getElementById('answers');
+
 
 
 // Option button Elements 
@@ -96,6 +100,9 @@ function questionAnswer(event) {
         console.log("Wrong");
         time -= 15;
 
+        responseText = "Wrong!!!";
+        responseEl.style.color = "red";
+
         if(time<0){
             time = 0;
         }
@@ -105,7 +112,14 @@ function questionAnswer(event) {
         time += 5;
         
         console.log("Correct");
+        responseText = "Correct!!!";
+        responseEl.style.color = "#337752";
+
     }
+
+    showResponse();
+
+
     timeLeftEl.textContent = time;
 
     questionIndex ++;
@@ -118,6 +132,17 @@ function questionAnswer(event) {
     }else{
         getQuestion();
     }
+  }
+
+
+  function showResponse(){
+    responseEl.textContent=responseText;
+
+    responseEl.setAttribute("class", "response");
+    setTimeout(function () {
+        responseEl.setAttribute('class', 'hide');
+      }, 1000);
+
   }
 
   function gameOver(){
